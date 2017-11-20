@@ -1,0 +1,133 @@
+﻿<Window x:Class="Vocabulary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Vocabulary.Converters"
+        xmlns:model="clr-namespace:Vocabulary.Model"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="442" Width="505.735"
+        DataContext="{Binding Source={StaticResource Main}}">
+    
+    <Window.Resources>
+        
+        <converters:ProgressColorConverter x:Key="ProgressColorConverter" />
+
+        <Style x:Key="ProgressRectangle" TargetType="Rectangle">
+            <Style.Setters>
+                <Setter Property="Fill" Value="{Binding Progress, Converter={StaticResource ProgressColorConverter}}" />
+                <Setter Property="StrokeThickness" Value="0.4" />
+                <Setter Property="Stroke" Value="Black" />
+            </Style.Setters>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+    
+    <Grid Margin="5,25,5,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Margin="2" IsChecked="{Binding IsShownNotLearned}">Not Learned</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding IsShownInProgress}">In Progress</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding IsShownLearned}">Learned</CheckBox>
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Dictionary}"
+                 Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="wordsListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type model:Word}">
+                    <Grid HorizontalAlignment="Stretch" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Rectangle Style="{StaticResource ProgressRectangle}"  Width="15" Height="15"></Rectangle>
+
+                        <TextBlock Text="{Binding Chinese}"
+                                   Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   FontSize="26" FontWeight="Bold"></TextBlock>
+
+                        <Grid Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Margin="3">Pinyin:</TextBlock>
+                            <TextBlock Text="{Binding Pinyin}" Margin="3"
+                                       Grid.Column="1"></TextBlock>
+                            <TextBlock Margin="3"
+                                       Grid.Row="1">English:</TextBlock>
+                            <TextBlock Text="{Binding English}" Margin="3"
+                                       Grid.Column="1" Grid.Row="1"></TextBlock>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+            <Button Click="Button_Click" Margin="5" Width="50">_Add</Button>
+            <Button Margin="5" Width="50" Command="{Binding DeleteCommand}">_Delete</Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Grid VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Target="{Binding ElementName=ChineseTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="0" Margin="3">_Chinese:</Label>
+                <TextBox Name="ChineseTextBox" Text="{Binding SelectedWord.Chinese, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="0" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+
+                <Label Target="{Binding ElementName=PinyinTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="1" Margin="3">_Pinyin:</Label>
+                <TextBox Name="PinyinTextBox" Text="{Binding SelectedWord.Pinyin, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="1" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+
+                <Label Target="{Binding ElementName=EnglishTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="2" Margin="3">_English:</Label>
+                <TextBox Name="EnglishTextBox" Text="{Binding SelectedWord.English, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="2" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+
+                <Label Target="{Binding ElementName=ProgressButton}"
+                       HorizontalAlignment="Right" Grid.Row="3" Margin="3">Progress:</Label>
+                <Button Name="ProgressButton"
+                        Background="{Binding SelectedWord.Progress, Converter={StaticResource ProgressColorConverter}}"
+                        Content="{Binding SelectedWord.Progress, StringFormat={}{0}}" IsEnabled="{Binding IsFieldEnabled}"
+                        Grid.Column="1" Grid.Row="3" Margin="15,3" FontWeight="Bold" Click="ProgressButton_Click"></Button>
+            </Grid>
+
+            <Button Name="Update" Width="60" HorizontalAlignment="Right" Margin="10,5,15,10" Click="Update_Click"
+                    Command="{Binding UpdateCommand}">_Update</Button>
+        </StackPanel>
+    </Grid>
+</Window>

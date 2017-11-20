@@ -1,0 +1,9 @@
+﻿<Application x:Class="Vocabulary.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Vocabulary" StartupUri="MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:Vocabulary.ViewModel">
+    <Application.Resources>
+        <ResourceDictionary>
+            <viewModel:MainViewModel x:Key="Main" />
+            <viewModel:AddWordViewModel x:Key="AddWord" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

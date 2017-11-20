@@ -1,0 +1,60 @@
+﻿<Window x:Class="Vocabulary.AddWordDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Vocabulary"
+        xmlns:converters="clr-namespace:Vocabulary.Converters"
+        mc:Ignorable="d"
+        Title="AddWordDialog" Height="229.483" Width="236.365"
+        DataContext="{Binding Source={StaticResource AddWord}}">
+    
+    <Window.Resources>
+
+        <converters:ProgressColorConverter x:Key="ProgressColorConverter" />
+        
+    </Window.Resources>
+    
+    <StackPanel Margin="0,15,0,0">
+        <Grid VerticalAlignment="Top" Height="135">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Target="{Binding ElementName=ChineseTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="0" Margin="3">_Chinese:</Label>
+            <TextBox Name="ChineseTextBox" Text="{Binding Chinese, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1" Grid.Row="0" Margin="15,3"></TextBox>
+
+            <Label Target="{Binding ElementName=PinyinTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="1" Margin="3">_Pinyin:</Label>
+            <TextBox Name="PinyinTextBox" Text="{Binding Pinyin, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1" Grid.Row="1" Margin="15,3"></TextBox>
+
+            <Label Target="{Binding ElementName=EnglishTextBox}"
+                       HorizontalAlignment="Right" Grid.Row="2" Margin="3">_English:</Label>
+            <TextBox Name="EnglishTextBox" Text="{Binding English, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1" Grid.Row="2" Margin="15,3"></TextBox>
+
+            <Label Target="{Binding ElementName=ProgressButton}"
+                       HorizontalAlignment="Right" Grid.Row="3" Margin="3">Progress:</Label>
+            <Button Name="ProgressButton"
+                        Background="{Binding Progress, Converter={StaticResource ProgressColorConverter}}"
+                        Content="{Binding Progress, StringFormat={}{0}}"
+                        Grid.Column="1" Grid.Row="3" Margin="15,3" FontWeight="Bold" Click="ProgressButton_Click"></Button>
+        </Grid>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+            <Button IsDefault="True" Content="OK" Width="50" Margin="10" Click="Button_Click" Command="{Binding AddWord}"></Button>
+            <Button IsCancel="True" Content="Cancel" Width="50" Margin="10"></Button>
+        </StackPanel>
+        
+    </StackPanel>
+</Window>
