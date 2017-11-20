@@ -307,8 +307,7 @@ namespace Vocabulary.ViewModel
                                    Chinese = word.Chinese,
                                    English = word.English,
                                    Pinyin = word.Pinyin,
-                                   Progress = word.Progress,
-                                   //IsDirty = false
+                                   Progress = word.Progress
                                };
                                this.SelectedWord = updated;
                            }
@@ -368,7 +367,7 @@ namespace Vocabulary.ViewModel
 
                                this.SelectedWord = null;
                            },
-                           () => this.SelectedWord != null //&& this.SelectedWord.IsDirty
+                           () => this.SelectedWord != null
                                 && this.SelectedWord.Chinese != "" && this.SelectedWord.Pinyin != "" && this.SelectedWord.English != ""));
             }
         }

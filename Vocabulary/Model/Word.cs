@@ -71,25 +71,6 @@ namespace Vocabulary.Model
         /// <owner>Mariia Yelisieieva</owner>
         public int Id { set; get; }
 
-        ///// <summary>
-        ///// A value indicating whether this instance is dirty.
-        ///// </summary>
-        ///// <owner>Mariia Yelisieieva</owner>
-        //private bool isDirty;
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether this instance is dirty.
-        ///// </summary>
-        ///// <value>
-        /////   <c>true</c> if this instance is dirty; otherwise, <c>false</c>.
-        ///// </value>
-        ///// <owner>Mariia Yelisieieva</owner>
-        //public bool IsDirty
-        //{
-        //    get { return isDirty; }
-        //    set { Set(() => IsDirty, ref isDirty, value); }
-        //}
-
         /// <summary>
         /// The pinyin of the Chinese word.
         /// </summary>

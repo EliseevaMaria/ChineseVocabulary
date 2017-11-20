@@ -85,7 +85,6 @@ namespace Vocabulary.Helpers
                 wordToUpdate.Pinyin = word.Pinyin;
                 wordToUpdate.English = word.English;
                 wordToUpdate.Progress = word.Progress;
-                //wordToUpdate.IsDirty = false;
 
                 context.SaveChanges();
             }

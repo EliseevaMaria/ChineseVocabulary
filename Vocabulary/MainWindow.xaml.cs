@@ -84,8 +84,6 @@ namespace Vocabulary
         /// <owner>Mariia Yelisieieva</owner>
         private void WordTextBoxes_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //if (this.viewModel.SelectedWord != null)
-            //    this.viewModel.SelectedWord.IsDirty = true;
             this.viewModel.UpdateCommand.RaiseCanExecuteChanged();
         }
     }

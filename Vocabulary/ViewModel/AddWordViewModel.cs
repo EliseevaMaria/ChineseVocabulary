@@ -37,8 +37,7 @@ namespace Vocabulary.ViewModel
                                Chinese = this.Chinese,
                                Pinyin = this.Pinyin,
                                English = this.English,
-                               Progress = this.Progress,
-                               //IsDirty = false
+                               Progress = this.Progress
                            }),
                            () => this.Chinese != "" && this.Pinyin != "" && this.English != ""));
             }

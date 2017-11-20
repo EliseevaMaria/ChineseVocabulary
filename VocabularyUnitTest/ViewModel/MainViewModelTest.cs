@@ -355,7 +355,7 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Update_WordNotDirty_CantExecute()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = new Word { /*IsDirty = false*/ };
+            vm.SelectedWord = new Word();
 
             bool canExecute = vm.UpdateCommand.CanExecute(null);
 
@@ -372,7 +372,6 @@ namespace VocabularyUnitTest.ViewModel
             MainViewModel vm = GetMainViewModel();
             vm.SelectedWord = new Word
             {
-                //IsDirty = false,
                 Chinese = "",
                 English = "1",
                 Pinyin = "2"
@@ -393,7 +392,6 @@ namespace VocabularyUnitTest.ViewModel
             MainViewModel vm = GetMainViewModel();
             vm.SelectedWord = new Word
             {
-                //IsDirty = false,
                 Chinese = "1",
                 English = "",
                 Pinyin = "2"
@@ -414,7 +412,6 @@ namespace VocabularyUnitTest.ViewModel
             MainViewModel vm = GetMainViewModel();
             vm.SelectedWord = new Word
             {
-                //IsDirty = false,
                 Chinese = "1",
                 English = "2",
                 Pinyin = ""
@@ -439,7 +436,6 @@ namespace VocabularyUnitTest.ViewModel
             vm.SelectedWord = new Word
             {
                 Id = 1,
-                //IsDirty = true,
                 Chinese = "1",
                 English = "2",
                 Pinyin = "3",
@@ -465,7 +461,6 @@ namespace VocabularyUnitTest.ViewModel
             Word selected = new Word
             {
                 Id = 1,
-                //IsDirty = true,
                 Chinese = "1",
                 English = "2",
                 Pinyin = "3",
@@ -474,7 +469,6 @@ namespace VocabularyUnitTest.ViewModel
             vm.SelectedWord = new Word
             {
                 Id = selected.Id,
-                //IsDirty = selected.IsDirty,
                 Chinese = selected.Chinese,
                 English = selected.English,
                 Pinyin = selected.Pinyin,
@@ -487,7 +481,6 @@ namespace VocabularyUnitTest.ViewModel
             Assert.AreEqual(selected.English, vm.Dictionary[0].English);
             Assert.AreEqual(selected.Pinyin, vm.Dictionary[0].Pinyin);
             Assert.AreEqual(selected.Progress, vm.Dictionary[0].Progress);
-            //Assert.AreNotEqual(selected.IsDirty, vm.Dictionary[0].IsDirty);
         }
     }
 }
