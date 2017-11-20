@@ -27,30 +27,6 @@ namespace Vocabulary
             InitializeComponent();
 
             this.viewModel = (MainViewModel) this.DataContext;
-            this.viewModel.GetAllWords();
-            this.viewModel.RefreshCommand.Execute(null);
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Button control and calls AddCommand execution.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        /// <owner>Mariia Yelisieieva</owner>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.AddCommand.Execute(null);
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ProgressButton control and calls ChangeProgressCommand execution.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        /// <owner>Mariia Yelisieieva</owner>
-        private void ProgressButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.ChangeProgressCommand.Execute(null);
         }
 
         /// <summary>
@@ -63,17 +39,6 @@ namespace Vocabulary
         {
             ListBox senderListBox = (ListBox) sender;
             this.viewModel.SelectCommand.Execute((Word) senderListBox.SelectedItem);
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Update control and calls UpdateCommand execution.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        /// <owner>Mariia Yelisieieva</owner>
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.UpdateCommand.Execute(this.viewModel.SelectedWord);
         }
 
         /// <summary>

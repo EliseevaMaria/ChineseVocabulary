@@ -118,14 +118,31 @@ namespace Vocabulary.ViewModel
         /// </value>
         /// <owner>Mariia Yelisieieva</owner>
         public ObservableCollection<Word> Dictionary { get; private set; }
-
+        
         /// <summary>
-        /// Gets all words.
+        /// The command to get all words from a source.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
-        public void GetAllWords()
+        private RelayCommand<int> getAllWordsCommand;
+
+        /// <summary>
+        /// Gets the command to get all words.
+        /// </summary>
+        /// <value>
+        /// The command to get all words.
+        /// </value>
+        /// <owner>Mariia Yelisieieva</owner>
+        public RelayCommand<int> GetAllWordsCommand
         {
-            this.wordsService.GetWords();
+            get
+            {
+                return this.getAllWordsCommand
+                       ?? (this.getAllWordsCommand = new RelayCommand<int>(index =>
+                       {
+                           this.wordsService.GetWords();
+                           this.RefreshCommand.Execute(null);
+                       }));
+            }
         }
 
         /// <summary>
@@ -263,7 +280,7 @@ namespace Vocabulary.ViewModel
                        ?? (this.refreshCommand = new RelayCommand<int>(index =>
                        {
                            Dictionary.Clear();
-
+                           
                            var filteredWords = this.wordsService.AllWords.Where(x => (IsShownNotLearned && x.Progress == LearningProgress.NotLearned)
                                                                                      || (IsShownInProgress && x.Progress == LearningProgress.InProgress)
                                                                                      || (IsShownLearned && x.Progress == LearningProgress.Learned));

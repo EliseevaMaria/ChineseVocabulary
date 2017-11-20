@@ -7,8 +7,15 @@
         xmlns:model="clr-namespace:Vocabulary.Model"
         mc:Ignorable="d"
         Title="MainWindow" Height="442" Width="505.735"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         DataContext="{Binding Source={StaticResource Main}}">
-    
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetAllWordsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Window.Resources>
         
         <converters:ProgressColorConverter x:Key="ProgressColorConverter" />
@@ -86,7 +93,7 @@
         </ListBox>
         
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-            <Button Click="Button_Click" Margin="5" Width="50">_Add</Button>
+            <Button Margin="5" Width="50" Command="{Binding AddCommand}">_Add</Button>
             <Button Margin="5" Width="50" Command="{Binding DeleteCommand}">_Delete</Button>
         </StackPanel>
 
@@ -123,10 +130,11 @@
                 <Button Name="ProgressButton"
                         Background="{Binding SelectedWord.Progress, Converter={StaticResource ProgressColorConverter}}"
                         Content="{Binding SelectedWord.Progress, StringFormat={}{0}}" IsEnabled="{Binding IsFieldEnabled}"
-                        Grid.Column="1" Grid.Row="3" Margin="15,3" FontWeight="Bold" Click="ProgressButton_Click"></Button>
+                        Command="{Binding ChangeProgressCommand}"
+                        Grid.Column="1" Grid.Row="3" Margin="15,3" FontWeight="Bold"></Button>
             </Grid>
 
-            <Button Name="Update" Width="60" HorizontalAlignment="Right" Margin="10,5,15,10" Click="Update_Click"
+            <Button Name="Update" Width="60" HorizontalAlignment="Right" Margin="10,5,15,10"
                     Command="{Binding UpdateCommand}">_Update</Button>
         </StackPanel>
     </Grid>

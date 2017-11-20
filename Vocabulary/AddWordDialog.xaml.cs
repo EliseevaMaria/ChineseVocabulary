@@ -33,17 +33,6 @@ namespace Vocabulary
         }
 
         /// <summary>
-        /// Handles the Click event of the ProgressButton control and calls ChangeProgressCommand execution.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        /// <owner>Mariia Yelisieieva</owner>
-        private void ProgressButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.AddViewModel.ChangeProgressCommand.Execute(null);
-        }
-
-        /// <summary>
         /// Handles the Click event of the Button control and calls the AddWordCommand execution.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -52,7 +41,6 @@ namespace Vocabulary
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
-            this.AddViewModel.AddWord.Execute(null);
         }
     }
 }

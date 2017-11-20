@@ -346,22 +346,7 @@ namespace VocabularyUnitTest.ViewModel
 
             Assert.IsFalse(canExecute);
         }
-
-        /// <summary>
-        /// Checks if a clean (not dirty) word can be updated.
-        /// </summary>
-        /// <owner>Mariia Yelisieieva</owner>
-        [TestMethod]
-        public void MainViewModel_Update_WordNotDirty_CantExecute()
-        {
-            MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = new Word();
-
-            bool canExecute = vm.UpdateCommand.CanExecute(null);
-
-            Assert.IsFalse(canExecute);
-        }
-
+        
         /// <summary>
         /// Checks if a word can be updated with an empty Chinese word.
         /// </summary>
@@ -439,12 +424,16 @@ namespace VocabularyUnitTest.ViewModel
                 Chinese = "1",
                 English = "2",
                 Pinyin = "3",
-                Progress = LearningProgress.NotLearned
+                Progress = LearningProgress.Learned
             };
 
             vm.UpdateCommand.Execute(null);
 
-            Assert.AreEqual(updated, vm.SelectedWord);
+            Assert.AreEqual(null, vm.SelectedWord);
+            Assert.AreEqual("1", updated.Chinese);
+            Assert.AreEqual("2", updated.English);
+            Assert.AreEqual("3", updated.Pinyin);
+            Assert.AreEqual(LearningProgress.Learned, updated.Progress);
         }
 
         /// <summary>
