@@ -106,6 +106,21 @@ namespace VocabularyUnitTest.ViewModel
         }
 
         /// <summary>
+        /// Checks if the progress changes properly.
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        [TestMethod]
+        public void AddWordViewModel_ChangeProgressCommand_NotLearned_ChangedToInProgress()
+        {
+            AddWordViewModel vm = new AddWordViewModel();
+            vm.Progress = LearningProgress.NotLearned;
+
+            vm.ChangeProgressCommand.Execute(null);
+
+            Assert.AreEqual(LearningProgress.InProgress, vm.Progress);
+        }
+
+        /// <summary>
         /// Checks whether the CanExecuteChange event is raised when new Chinese value is set.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>

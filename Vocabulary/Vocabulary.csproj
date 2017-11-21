@@ -88,15 +88,6 @@
     <Compile Include="Helpers\DialogOpen.cs" />
     <Compile Include="Helpers\IDialogOpen.cs" />
     <Compile Include="Helpers\IWordsService.cs" />
-    <Compile Include="Migrations\201711171025517_InitialCreate.cs" />
-    <Compile Include="Migrations\201711171025517_InitialCreate.Designer.cs">
-      <DependentUpon>201711171025517_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711201037276_RemoveIsDirty.cs" />
-    <Compile Include="Migrations\201711201037276_RemoveIsDirty.Designer.cs">
-      <DependentUpon>201711201037276_RemoveIsDirty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\LearningProgress.cs" />
     <Compile Include="Converters\ProgressSolidColorBrushConverter.cs" />
     <Compile Include="Helpers\WordsService.cs" />
@@ -136,12 +127,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201711171025517_InitialCreate.resx">
-      <DependentUpon>201711171025517_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711201037276_RemoveIsDirty.resx">
-      <DependentUpon>201711201037276_RemoveIsDirty.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

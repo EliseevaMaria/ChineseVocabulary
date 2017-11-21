@@ -124,6 +124,40 @@ namespace VocabularyUnitTest.ViewModel
         }
 
         /// <summary>
+        /// Checks if CanExecuteChanged is raised when calling ChangeDetailsCommand. 
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        [TestMethod]
+        public void MainViewModel_ChangeDetails_ChangeDetailsCommandExecutes_CanExecuteChangedRaised()
+        {
+            MainViewModel viewModel = GetMainViewModel();
+            bool raised = false;
+            viewModel.UpdateCommand.CanExecuteChanged += (x, y) => { raised = true; };
+
+            viewModel.ChangeDetailsCommand.Execute(null);
+
+            Assert.IsTrue(raised);
+        }
+
+        /// <summary>
+        /// Checks if the progress changes properly.
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        [TestMethod]
+        public void MainViewModel_ChangeProgress_NotLearned_ChangedToInProgress()
+        {
+            MainViewModel viewModel = GetMainViewModel();
+            viewModel.DetailedWord = new Word()
+            {
+                Progress = LearningProgress.NotLearned
+            };
+
+            viewModel.ChangeProgressCommand.Execute(null);
+
+            Assert.AreEqual(LearningProgress.InProgress, viewModel.DetailedWord.Progress);
+        }
+
+        /// <summary>
         /// Checks if the attempt to change the learning progress without a word selected throws an exception.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
@@ -135,7 +169,7 @@ namespace VocabularyUnitTest.ViewModel
 
             viewModel.ChangeProgressCommand.Execute(null);
         }
-        
+
         /// <summary>
         /// Checks if a word can be deleted without a word selected.
         /// </summary>
@@ -167,6 +201,26 @@ namespace VocabularyUnitTest.ViewModel
             viewModel.DeleteCommand.Execute(null);
 
             Assert.AreEqual(0, toRemove.Count);
+        }
+
+        /// <summary>
+        /// Checks if GetAllWordsCommand calls service's GetAllWords method.
+        /// </summary>
+        [TestMethod]
+        public void MainViewModel_GetAllWords_CallCommand_WordsGot()
+        {
+            bool wordsGot = false;
+            MainViewModel vm = GetMainViewModel(
+                allWordsGet: () => allWords,
+                getWords: () =>
+                {
+                    wordsGot = true;
+                    return allWords;
+                });
+
+            vm.GetAllWordsCommand.Execute(null);
+
+            Assert.IsTrue(wordsGot);
         }
 
         /// <summary>
