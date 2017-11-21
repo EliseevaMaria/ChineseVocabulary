@@ -46,6 +46,7 @@ namespace Vocabulary.ViewModel
                                this.wordsService.Add(addedWord);
                                this.RefreshCommand.Execute(null);
                            }
+                           Messenger.Default.Unregister<Word>(this);
                        }));
             }
         }
