@@ -12,11 +12,6 @@ namespace Vocabulary
     public partial class AddWordDialog : Window
     {
         /// <summary>
-        /// The ViewModel instance for the model interaction logic.
-        /// </summary>
-        private AddWordViewModel AddViewModel;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AddWordDialog"/> class.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
@@ -24,12 +19,12 @@ namespace Vocabulary
         {
             InitializeComponent();
 
-            this.AddViewModel = (AddWordViewModel) this.DataContext;
+            AddWordViewModel addViewModel = (AddWordViewModel) this.DataContext;
 
-            this.AddViewModel.Chinese = "";
-            this.AddViewModel.Pinyin = "";
-            this.AddViewModel.English = "";
-            this.AddViewModel.Progress = LearningProgress.NotLearned;
+            addViewModel.Chinese = "";
+            addViewModel.Pinyin = "";
+            addViewModel.English = "";
+            addViewModel.Progress = LearningProgress.NotLearned;
         }
 
         /// <summary>

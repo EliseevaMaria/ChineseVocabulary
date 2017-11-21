@@ -162,7 +162,7 @@ namespace VocabularyUnitTest.ViewModel
                 allWordsGet: () => toRemove,
                 removeWord: word => toRemove.Remove(word));
             viewModel.RefreshCommand.Execute(null);
-            viewModel.SelectedWord = allWords[0];
+            viewModel.DetailedWord = allWords[0];
 
             viewModel.DeleteCommand.Execute(null);
 
@@ -254,7 +254,7 @@ namespace VocabularyUnitTest.ViewModel
         {
             MainViewModel vm = GetMainViewModel();
 
-            vm.SelectedWord = null;
+            vm.DetailedWord = null;
 
             bool canUpdate = vm.UpdateCommand.CanExecute(null);
             Assert.IsFalse(canUpdate);
@@ -269,7 +269,7 @@ namespace VocabularyUnitTest.ViewModel
         {
             MainViewModel vm = GetMainViewModel();
 
-            vm.SelectedWord = null;
+            vm.DetailedWord = null;
 
             bool canUpdate = vm.DeleteCommand.CanExecute(null);
             Assert.IsFalse(canUpdate);
@@ -284,9 +284,9 @@ namespace VocabularyUnitTest.ViewModel
         {
             MainViewModel vm = GetMainViewModel();
 
-            vm.SelectedWord = allWords[0];
+            vm.DetailedWord = allWords[0];
 
-            Assert.AreEqual(allWords[0], vm.SelectedWord);
+            Assert.AreEqual(allWords[0], vm.DetailedWord);
             Assert.IsTrue(vm.DeleteCommand.CanExecute(null));
             Assert.IsTrue(vm.UpdateCommand.CanExecute(null));
         }
@@ -299,11 +299,11 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Select_Unselected_NotUpdateSelected()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = null;
+            vm.DetailedWord = null;
 
             vm.SelectCommand.Execute(null);
 
-            Assert.AreEqual(null, vm.SelectedWord);
+            Assert.AreEqual(null, vm.DetailedWord);
         }
 
         /// <summary>
@@ -314,8 +314,8 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Select_Selected_UpdateSelected()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = allWords[0];
-            Word wordToSelect = new Word()
+            vm.DetailedWord = allWords[0];
+            vm.ListBoxSelectedWord = new Word()
             {
                 Id = 1,
                 Chinese = "1",
@@ -324,13 +324,13 @@ namespace VocabularyUnitTest.ViewModel
                 Progress = LearningProgress.InProgress,
             };
 
-            vm.SelectCommand.Execute(wordToSelect);
+            vm.SelectCommand.Execute(null);
 
-            Assert.AreEqual(1, vm.SelectedWord.Id);
-            Assert.AreEqual("1", vm.SelectedWord.Chinese);
-            Assert.AreEqual("2", vm.SelectedWord.Pinyin);
-            Assert.AreEqual("3", vm.SelectedWord.English);
-            Assert.AreEqual(LearningProgress.InProgress, vm.SelectedWord.Progress);
+            Assert.AreEqual(1, vm.DetailedWord.Id);
+            Assert.AreEqual("1", vm.DetailedWord.Chinese);
+            Assert.AreEqual("2", vm.DetailedWord.Pinyin);
+            Assert.AreEqual("3", vm.DetailedWord.English);
+            Assert.AreEqual(LearningProgress.InProgress, vm.DetailedWord.Progress);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Update_ChineseEmpty_CantExecute()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = new Word
+            vm.DetailedWord = new Word
             {
                 Chinese = "",
                 English = "1",
@@ -375,7 +375,7 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Update_EnglishEmpty_CantExecute()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = new Word
+            vm.DetailedWord = new Word
             {
                 Chinese = "1",
                 English = "",
@@ -395,7 +395,7 @@ namespace VocabularyUnitTest.ViewModel
         public void MainViewModel_Update_PinyinEmpty_CantExecute()
         {
             MainViewModel vm = GetMainViewModel();
-            vm.SelectedWord = new Word
+            vm.DetailedWord = new Word
             {
                 Chinese = "1",
                 English = "2",
@@ -418,7 +418,7 @@ namespace VocabularyUnitTest.ViewModel
             MainViewModel vm = GetMainViewModel(
                 allWordsGet: () => new List<Word> { allWords[0] },
                 updateWord: (word) => { updated = word; });
-            vm.SelectedWord = new Word
+            vm.DetailedWord = new Word
             {
                 Id = 1,
                 Chinese = "1",
@@ -429,7 +429,7 @@ namespace VocabularyUnitTest.ViewModel
 
             vm.UpdateCommand.Execute(null);
 
-            Assert.AreEqual(null, vm.SelectedWord);
+            Assert.AreEqual(null, vm.DetailedWord);
             Assert.AreEqual("1", updated.Chinese);
             Assert.AreEqual("2", updated.English);
             Assert.AreEqual("3", updated.Pinyin);
@@ -455,7 +455,7 @@ namespace VocabularyUnitTest.ViewModel
                 Pinyin = "3",
                 Progress = LearningProgress.NotLearned
             };
-            vm.SelectedWord = new Word
+            vm.DetailedWord = new Word
             {
                 Id = selected.Id,
                 Chinese = selected.Chinese,

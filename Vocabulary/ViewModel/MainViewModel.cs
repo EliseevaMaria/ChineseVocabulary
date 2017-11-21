@@ -52,6 +52,31 @@ namespace Vocabulary.ViewModel
         }
 
         /// <summary>
+        /// The command to change details of the selected word.
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        private RelayCommand changeDetailsCommand;
+
+        /// <summary>
+        /// Gets the command to change details of the selected word.
+        /// </summary>
+        /// <value>
+        /// The command to change details of the selected word.
+        /// </value>
+        /// <owner>Mariia Yelisieieva</owner>
+        public RelayCommand ChangeDetailsCommand
+        {
+            get
+            {
+                return this.changeDetailsCommand
+                       ?? (this.changeDetailsCommand = new RelayCommand(() =>
+                       {
+                           this.UpdateCommand.RaiseCanExecuteChanged();
+                       }));
+            }
+        }
+
+        /// <summary>
         /// The change progress command.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
@@ -71,7 +96,7 @@ namespace Vocabulary.ViewModel
                 return this.changeProgressCommand
                        ?? (this.changeProgressCommand = new RelayCommand(() =>
                        {
-                           selectedWord.Progress = Word.ChangeLearningProgress(selectedWord.Progress);
+                           detailedWord.Progress = Word.ChangeLearningProgress(detailedWord.Progress);
                        }));
             }
         }
@@ -96,12 +121,12 @@ namespace Vocabulary.ViewModel
                 return this.deleteCommand
                        ?? (this.deleteCommand = new RelayCommand(() =>
                            {
-                               this.wordsService.Remove(this.SelectedWord);
+                               this.wordsService.Remove(this.DetailedWord);
                                this.RefreshCommand.Execute(null);
 
-                               this.SelectedWord = null;
+                               this.DetailedWord = null;
                            },
-                           () => this.SelectedWord != null));
+                           () => this.DetailedWord != null));
             }
         }
 
@@ -239,6 +264,15 @@ namespace Vocabulary.ViewModel
         }
 
         /// <summary>
+        /// Gets or sets the ListBox selected word.
+        /// </summary>
+        /// <value>
+        /// The ListBox selected word.
+        /// </value>
+        /// <owner>Mariia Yelisieieva</owner>
+        public Word ListBoxSelectedWord { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
@@ -291,7 +325,7 @@ namespace Vocabulary.ViewModel
                                Dictionary.Add(word);
                            }
 
-                           this.SelectedWord = null;
+                           this.DetailedWord = null;
                        }));
             }
         }
@@ -300,7 +334,7 @@ namespace Vocabulary.ViewModel
         /// The command to select a word from the list.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
-        private RelayCommand<Word> selectCommand;
+        private RelayCommand selectCommand;
 
         /// <summary>
         /// Gets the select command.
@@ -309,50 +343,50 @@ namespace Vocabulary.ViewModel
         /// The select command.
         /// </value>
         /// <owner>Mariia Yelisieieva</owner>
-        public RelayCommand<Word> SelectCommand
+        public RelayCommand SelectCommand
         {
             get
             {
                 return this.selectCommand
-                       ?? (this.selectCommand = new RelayCommand<Word>(word =>
+                       ?? (this.selectCommand = new RelayCommand(() =>
                        {
                            Word updated = null;
-                           if (word != null)
+                           if (this.ListBoxSelectedWord != null)
                            {
                                updated = new Word()
                                {
-                                   Id = word.Id,
-                                   Chinese = word.Chinese,
-                                   English = word.English,
-                                   Pinyin = word.Pinyin,
-                                   Progress = word.Progress
+                                   Id = this.ListBoxSelectedWord.Id,
+                                   Chinese = this.ListBoxSelectedWord.Chinese,
+                                   English = this.ListBoxSelectedWord.English,
+                                   Pinyin = this.ListBoxSelectedWord.Pinyin,
+                                   Progress = this.ListBoxSelectedWord.Progress
                                };
-                               this.SelectedWord = updated;
+                               this.DetailedWord = updated;
                            }
                        }));
             }
         }
 
         /// <summary>
-        /// The word selected from the list.
+        /// The word selected to show details.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
-        private Word selectedWord;
+        private Word detailedWord;
 
         /// <summary>
-        /// Gets or sets the selected word.
+        /// Gets or sets the word to show details of.
         /// </summary>
         /// <value>
-        /// The selected word.
+        /// The copy of the selected word.
         /// </value>
         /// <owner>Mariia Yelisieieva</owner>
-        public Word SelectedWord
+        public Word DetailedWord
         {
-            get { return this.selectedWord; }
+            get { return this.detailedWord; }
             set
             {
                 this.IsFieldEnabled = value != null;
-                Set(() => SelectedWord, ref this.selectedWord, value);
+                Set(() => DetailedWord, ref this.detailedWord, value);
 
                 UpdateCommand.RaiseCanExecuteChanged();
                 DeleteCommand.RaiseCanExecuteChanged();
@@ -380,13 +414,13 @@ namespace Vocabulary.ViewModel
                        ?? (this.updateCommand = new RelayCommand(
                            () =>
                            {
-                               this.wordsService.Update(this.SelectedWord);
+                               this.wordsService.Update(this.DetailedWord);
                                this.RefreshCommand.Execute(null);
 
-                               this.SelectedWord = null;
+                               this.DetailedWord = null;
                            },
-                           () => this.SelectedWord != null
-                                && this.SelectedWord.Chinese != "" && this.SelectedWord.Pinyin != "" && this.SelectedWord.English != ""));
+                           () => this.DetailedWord != null
+                                && this.DetailedWord.Chinese != "" && this.DetailedWord.Pinyin != "" && this.DetailedWord.English != ""));
             }
         }
 

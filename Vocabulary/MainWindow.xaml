@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="442" Width="505.735"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         DataContext="{Binding Source={StaticResource Main}}">
 
     <i:Interaction.Triggers>
@@ -26,8 +27,6 @@
                 <Setter Property="StrokeThickness" Value="0.4" />
                 <Setter Property="Stroke" Value="Black" />
             </Style.Setters>
-            <Style.Triggers>
-            </Style.Triggers>
         </Style>
         
     </Window.Resources>
@@ -49,8 +48,13 @@
             <CheckBox Margin="2" IsChecked="{Binding IsShownLearned}">Learned</CheckBox>
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding Dictionary}"
-                 Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="wordsListBox_SelectionChanged">
+        <ListBox ItemsSource="{Binding Dictionary}" SelectedItem="{Binding ListBoxSelectedWord, Mode=TwoWay}"
+                 Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <command:EventToCommand Command="{Binding SelectCommand}"></command:EventToCommand>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type model:Word}">
                     <Grid HorizontalAlignment="Stretch" Margin="5">
@@ -110,26 +114,39 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Target="{Binding ElementName=ChineseTextBox}"
-                       HorizontalAlignment="Right" Grid.Row="0" Margin="3">_Chinese:</Label>
-                <TextBox Name="ChineseTextBox" Text="{Binding SelectedWord.Chinese, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
-                         Grid.Column="1" Grid.Row="0" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+                <Label HorizontalAlignment="Right" Grid.Row="0" Margin="3">Chinese:</Label>
+                <TextBox Text="{Binding DetailedWord.Chinese, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="0" Margin="15,3">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <command:EventToCommand Command="{Binding ChangeDetailsCommand}"></command:EventToCommand>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
 
-                <Label Target="{Binding ElementName=PinyinTextBox}"
-                       HorizontalAlignment="Right" Grid.Row="1" Margin="3">_Pinyin:</Label>
-                <TextBox Name="PinyinTextBox" Text="{Binding SelectedWord.Pinyin, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
-                         Grid.Column="1" Grid.Row="1" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+                <Label HorizontalAlignment="Right" Grid.Row="1" Margin="3">Pinyin:</Label>
+                <TextBox Text="{Binding DetailedWord.Pinyin, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="1" Margin="15,3">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <command:EventToCommand Command="{Binding ChangeDetailsCommand}"></command:EventToCommand>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
 
-                <Label Target="{Binding ElementName=EnglishTextBox}"
-                       HorizontalAlignment="Right" Grid.Row="2" Margin="3">_English:</Label>
-                <TextBox Name="EnglishTextBox" Text="{Binding SelectedWord.English, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
-                         Grid.Column="1" Grid.Row="2" Margin="15,3" TextChanged="WordTextBoxes_TextChanged"></TextBox>
+                <Label HorizontalAlignment="Right" Grid.Row="2" Margin="3">English:</Label>
+                <TextBox Text="{Binding DetailedWord.English, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsFieldEnabled}"
+                         Grid.Column="1" Grid.Row="2" Margin="15,3">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <command:EventToCommand Command="{Binding ChangeDetailsCommand}"></command:EventToCommand>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
 
-                <Label Target="{Binding ElementName=ProgressButton}"
-                       HorizontalAlignment="Right" Grid.Row="3" Margin="3">Progress:</Label>
-                <Button Name="ProgressButton"
-                        Background="{Binding SelectedWord.Progress, Converter={StaticResource ProgressColorConverter}}"
-                        Content="{Binding SelectedWord.Progress, StringFormat={}{0}}" IsEnabled="{Binding IsFieldEnabled}"
+                <Label HorizontalAlignment="Right" Grid.Row="3" Margin="3">Progress:</Label>
+                <Button Background="{Binding DetailedWord.Progress, Converter={StaticResource ProgressColorConverter}}"
+                        Content="{Binding DetailedWord.Progress, StringFormat={}{0}}" IsEnabled="{Binding IsFieldEnabled}"
                         Command="{Binding ChangeProgressCommand}"
                         Grid.Column="1" Grid.Row="3" Margin="15,3" FontWeight="Bold"></Button>
             </Grid>
