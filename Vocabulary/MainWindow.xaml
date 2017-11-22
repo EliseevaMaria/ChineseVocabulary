@@ -43,9 +43,9 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal">
-            <CheckBox Margin="2" IsChecked="{Binding IsShownNotLearned}">Not Learned</CheckBox>
-            <CheckBox Margin="2" IsChecked="{Binding IsShownInProgress}">In Progress</CheckBox>
-            <CheckBox Margin="2" IsChecked="{Binding IsShownLearned}">Learned</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding IsShownNotLearned}" IsEnabled="{Binding IsListSet}">Not Learned</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding IsShownInProgress}" IsEnabled="{Binding IsListSet}">In Progress</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding IsShownLearned}" IsEnabled="{Binding IsListSet}">Learned</CheckBox>
         </StackPanel>
 
         <ListBox ItemsSource="{Binding Dictionary}" SelectedItem="{Binding ListBoxSelectedWord, Mode=TwoWay}"
@@ -97,7 +97,7 @@
         </ListBox>
         
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-            <Button Margin="5" Width="50" Command="{Binding AddCommand}">_Add</Button>
+            <Button Margin="5" Width="50" Command="{Binding AddCommand}" IsEnabled="{Binding IsListSet}">_Add</Button>
             <Button Margin="5" Width="50" Command="{Binding DeleteCommand}">_Delete</Button>
         </StackPanel>
 

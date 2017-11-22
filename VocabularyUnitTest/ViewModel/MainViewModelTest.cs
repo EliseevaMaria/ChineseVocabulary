@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.QualityTools.Testing.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -49,7 +50,7 @@ namespace VocabularyUnitTest.ViewModel
             FakesDelegates.Action<Word> addWord = null,
             FakesDelegates.Action<Word> removeWord = null,
             FakesDelegates.Action<Word> updateWord = null,
-            FakesDelegates.Func<List<Word>> getWords = null)
+            FakesDelegates.Func<Task> getWords = null)
         {
             var dialogOpen = new StubIDialogOpen()
             {
@@ -59,7 +60,7 @@ namespace VocabularyUnitTest.ViewModel
             {
                 AllWordsGet = allWordsGet,
                 AddWord = addWord,
-                GetWords = getWords,
+                GetWordsAsync = getWords,
                 RemoveWord = removeWord,
                 UpdateWord = updateWord
             };
@@ -215,7 +216,7 @@ namespace VocabularyUnitTest.ViewModel
                 getWords: () =>
                 {
                     wordsGot = true;
-                    return allWords;
+                    return Task.CompletedTask;
                 });
 
             vm.GetAllWordsCommand.Execute(null);

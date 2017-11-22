@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -149,7 +150,7 @@ namespace Vocabulary.ViewModel
         /// The command to get all words from a source.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
-        private RelayCommand<int> getAllWordsCommand;
+        private RelayCommand getAllWordsCommand;
 
         /// <summary>
         /// Gets the command to get all words.
@@ -158,15 +159,16 @@ namespace Vocabulary.ViewModel
         /// The command to get all words.
         /// </value>
         /// <owner>Mariia Yelisieieva</owner>
-        public RelayCommand<int> GetAllWordsCommand
+        public RelayCommand GetAllWordsCommand
         {
             get
             {
                 return this.getAllWordsCommand
-                       ?? (this.getAllWordsCommand = new RelayCommand<int>(index =>
+                       ?? (this.getAllWordsCommand = new RelayCommand(async () =>
                        {
-                           this.wordsService.GetWords();
+                           await Task.Run(() => this.wordsService.GetWordsAsync());
                            this.RefreshCommand.Execute(null);
+                           IsListSet = true;
                        }));
             }
         }
@@ -189,6 +191,28 @@ namespace Vocabulary.ViewModel
             get { return isFieldEnabled; }
 
             set { Set(() => IsFieldEnabled, ref isFieldEnabled, value); }
+        }
+
+        /// <summary>
+        /// Indicates if the words list is set.
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        private bool isListSet;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the words list is set.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the words list is set; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsListSet
+        {
+            get { return isListSet; }
+
+            set
+            {
+                Set(() => IsListSet, ref isListSet, value);
+            }
         }
 
         /// <summary>

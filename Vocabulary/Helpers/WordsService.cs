@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Vocabulary.Model;
 
 namespace Vocabulary.Helpers
@@ -35,20 +37,18 @@ namespace Vocabulary.Helpers
         public List<Word> AllWords { get; set; }
 
         /// <summary>
-        /// Gets the words from the database.
+        /// Gets the words.
         /// </summary>
         /// <returns>
-        /// List of words.
+        /// A task to wait for before getting the words.
         /// </returns>
         /// <owner>Mariia Yelisieieva</owner>
-        public List<Word> GetWords()
+        public async Task GetWordsAsync()
         {
             using (var context = new WordContext())
             {
-                AllWords = context.Words.ToList();
+                AllWords = await context.Words.ToListAsync();
             }
-
-            return AllWords;
         }
 
         /// <summary>

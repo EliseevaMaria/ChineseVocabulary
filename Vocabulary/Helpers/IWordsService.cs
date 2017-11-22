@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vocabulary.Model;
 
 namespace Vocabulary.Helpers
@@ -26,9 +27,11 @@ namespace Vocabulary.Helpers
         /// <summary>
         /// Gets the words.
         /// </summary>
+        /// <returns>
+        /// A task to wait for before getting the words.
+        /// </returns>
         /// <owner>Mariia Yelisieieva</owner>
-        /// <returns>List of words.</returns>
-        List<Word> GetWords();
+        Task GetWordsAsync();
 
         /// <summary>
         /// Removes the specified word.
