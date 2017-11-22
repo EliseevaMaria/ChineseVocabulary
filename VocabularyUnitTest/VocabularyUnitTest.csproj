@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ProgressColorConverterTest.cs" />
+    <Compile Include="Converters\BooleanVisibilityConverterTest.cs" />
     <Compile Include="Model\WordTest.cs" />
     <Compile Include="ViewModel\AddWordViewModelTest.cs" />
     <Compile Include="ViewModel\MainViewModelTest.cs" />

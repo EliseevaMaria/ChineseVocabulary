@@ -85,6 +85,7 @@
     <Compile Include="AddWordDialog.xaml.cs">
       <DependentUpon>AddWordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Helpers\DialogOpen.cs" />
     <Compile Include="Helpers\IDialogOpen.cs" />
     <Compile Include="Helpers\IWordsService.cs" />
