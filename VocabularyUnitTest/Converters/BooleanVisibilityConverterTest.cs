@@ -43,15 +43,30 @@ namespace VocabularyUnitTest.Converters
             Assert.AreEqual(Visibility.Collapsed, result);
         }
 
+
         /// <summary>
-        /// Checks whether the back conversion implemented.
+        /// Checks whether null of object is converted to Visibility.Collapsed.
+        /// </summary>
+        /// <owner>Mariia Yelisieieva</owner>
+        [TestMethod]
+        public void BooleanVisibilityConverter_Convert_Null_ReturnCollapsed()
+        {
+            BooleanVisibilityConverter converter = new BooleanVisibilityConverter();
+
+            Visibility result = (Visibility)converter.Convert(null, typeof(object), new Object(), CultureInfo.CurrentCulture);
+
+            Assert.AreEqual(Visibility.Collapsed, result);
+        }
+
+        /// <summary>
+        /// Checks whether the back conversion is implemented.
         /// </summary>
         /// <owner>Mariia Yelisieieva</owner>
         [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void BooleanVisibilityConverter_ConvertBack_DefaultParameters_ThrowException()
         {
-            ProgressColorConverter converter = new ProgressColorConverter();
+            BooleanVisibilityConverter converter = new BooleanVisibilityConverter();
 
             converter.ConvertBack(new Object(), typeof(SolidColorBrush), new Object(), CultureInfo.CurrentCulture);
         }

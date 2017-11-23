@@ -27,7 +27,7 @@ namespace Vocabulary.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool isHidden = (bool) (value ?? false);
+            bool isHidden = (bool) (value ?? true);
 
             Visibility result = isHidden ? Visibility.Collapsed : Visibility.Visible;
 
